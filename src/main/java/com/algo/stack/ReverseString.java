@@ -1,4 +1,4 @@
-package com.algo;
+package com.algo.stack;
 
 public class ReverseString {
     public String reverseString(String s) {

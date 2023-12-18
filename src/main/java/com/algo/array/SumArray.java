@@ -1,4 +1,4 @@
-package com.algo;
+package com.algo.array;
 
 public class SumArray {
     public int[] runningSum(int[] nums) {
