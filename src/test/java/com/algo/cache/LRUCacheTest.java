@@ -32,8 +32,6 @@ class LRUCacheTest {
         cacheV2.put(2, "Karol");
         cacheV2.put(3, "Joe");
 
-
-
         cacheV2.get(1); //Andre
         cacheV2.get(3); //Joe
         cacheV2.get(1); //Andre
@@ -48,5 +46,12 @@ class LRUCacheTest {
                 () -> assertFalse(cacheV2.get(3).isPresent()),
                 () -> assertFalse(cacheV2.get(2).isPresent())
         );
+    }
+
+    @Test
+    void shouldReturnEmptyWhenItemNotExists() {
+        LRUCache<Integer, String> cacheV2 = new LRUCache<>(3);
+
+        assertTrue(cacheV2.get(1).isEmpty());
     }
 }

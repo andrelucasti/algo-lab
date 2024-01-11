@@ -3,7 +3,7 @@ package com.algo.cache;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class LFUCacheTest {
     @Test
@@ -39,6 +39,12 @@ class LFUCacheTest {
                 ()-> Assertions.assertFalse(lfuCache.get(4).isPresent())
         );
 
+    }
 
+    @Test
+    void shouldReturnEmptyWhenItemNotExists() {
+        LFUCache<Integer, String> lfuCache = new LFUCache<>(3);
+
+        assertTrue(lfuCache.get(1).isEmpty());
     }
 }
