@@ -15,6 +15,8 @@ class LRUCacheTest {
         cacheV2.put(3, "Joe");
         cacheV2.put(4, "Lucas");
 
+        cacheV2.display();
+
         assertAll(
                 () -> assertFalse(cacheV2.get(1).isPresent()),
                 () -> assertTrue(cacheV2.get(2).isPresent()),
@@ -29,6 +31,8 @@ class LRUCacheTest {
         cacheV2.put(1, "Andre");
         cacheV2.put(2, "Karol");
         cacheV2.put(3, "Joe");
+
+
 
         cacheV2.get(1); //Andre
         cacheV2.get(3); //Joe

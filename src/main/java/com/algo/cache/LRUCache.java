@@ -40,11 +40,8 @@ public class LRUCache<K,V> implements Cache<K,V> {
 
     @Override
     public void display() {
-
-    }
-
-    @Override
-    public void displayRecentlyUsed() {
+        data.forEach((k, value) -> System.out.printf("Key: %s | Value: %s%n", k, value));
+        System.out.printf("Last fetched/stored %s", orderQueue.peek());
 
     }
 }
