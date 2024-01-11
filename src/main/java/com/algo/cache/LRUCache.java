@@ -2,11 +2,11 @@ package com.algo.cache;
 
 import java.util.*;
 
-public class LRUCacheV2<K,V> implements Cache<K,V> {
+public class LRUCache<K,V> implements Cache<K,V> {
     private final int capacity;
     private final Map<K, V> data;
     private final Deque<K> orderQueue;
-    public LRUCacheV2(int capacity) {
+    public LRUCache(int capacity) {
         this.capacity = capacity;
         this.data = new HashMap<>(capacity);
         this.orderQueue = new LinkedList<>();

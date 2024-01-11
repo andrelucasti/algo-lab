@@ -5,11 +5,11 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 
-class LRUCacheV2Test {
+class LRUCacheTest {
 
     @Test
     void shouldReturnOnlyTheMostRecentItemsFromCacheWhenTheAmountOfItemsGraterThanCapacitySize() {
-        LRUCacheV2<Integer, String> cacheV2 = new LRUCacheV2<>(3);
+        LRUCache<Integer, String> cacheV2 = new LRUCache<>(3);
         cacheV2.put(1, "Andre");
         cacheV2.put(2, "Karol");
         cacheV2.put(3, "Joe");
@@ -25,7 +25,7 @@ class LRUCacheV2Test {
 
     @Test
     void shouldKeepTheMostRecentItemsFromCacheWhenItWasGotLast() {
-        LRUCacheV2<Integer, String> cacheV2 = new LRUCacheV2<>(3);
+        LRUCache<Integer, String> cacheV2 = new LRUCache<>(3);
         cacheV2.put(1, "Andre");
         cacheV2.put(2, "Karol");
         cacheV2.put(3, "Joe");
