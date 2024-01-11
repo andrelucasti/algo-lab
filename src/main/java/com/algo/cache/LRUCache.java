@@ -15,9 +15,7 @@ public class LRUCache<K,V> implements Cache<K,V> {
     @Override
     public void put(K key, V value) {
         if (orderQueue.size() >= capacity){
-            K firstKey = orderQueue.pollLast();
-
-            data.remove(firstKey);
+            evict();
         }
 
         data.put(key, value);
@@ -42,6 +40,11 @@ public class LRUCache<K,V> implements Cache<K,V> {
     public void display() {
         data.forEach((k, value) -> System.out.printf("Key: %s | Value: %s%n", k, value));
         System.out.printf("Last fetched/stored %s", orderQueue.peek());
+    }
 
+    private void evict() {
+        K firstKey = orderQueue.pollLast();
+
+        data.remove(firstKey);
     }
 }

@@ -14,13 +14,7 @@ public class LFUCache<K,V> implements Cache<K,V>{
     @Override
     public void put(K key, V value) {
         if (data.size() >= capacity){
-            Item<K, V> item = data.values()
-                    .stream()
-                    .filter(kvItem -> kvItem.count == data.values().stream().map(c -> c.count).mapToInt(v -> v).min().getAsInt())
-                    .findFirst().orElseThrow();
-
-            data.remove(item.key, item);
-
+            evict();
         }
 
         data.put(key, new Item<>(key, value));
@@ -42,11 +36,19 @@ public class LFUCache<K,V> implements Cache<K,V>{
     public void display() {
         data.forEach((k, kvItem) -> System.out.printf("Key: %s | Value: %s | Counts: %s%n", k, kvItem.value, kvItem.count));
     }
-    
+
+    private void evict() {
+        Item<K, V> item = data.values()
+                .stream()
+                .filter(kvItem -> kvItem.count == data.values().stream().map(c -> c.count).mapToInt(v -> v).min().getAsInt())
+                .findFirst().orElseThrow();
+
+        data.remove(item.key, item);
+    }
+
     private static class Item<K,V> {
         private final K key;
         private final V value;
-        
         private int count;
 
         public Item(K key, V value) {
