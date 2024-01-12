@@ -1,8 +1,10 @@
 package com.algo.cache;
 
 import java.util.*;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 
-public class LFUCache<K,V> implements Cache<K,V>{
+public class LFUCache<K,V> implements Cache<K,V> {
+    private final ReentrantReadWriteLock lock = new ReentrantReadWriteLock();
     private final int capacity;
     private final Map<K,Item<K,V>> data;
 
@@ -13,28 +15,44 @@ public class LFUCache<K,V> implements Cache<K,V>{
 
     @Override
     public void put(K key, V value) {
-        if (data.size() >= capacity){
-            evict();
-        }
+        lock.writeLock().lock();
 
-        data.put(key, new Item<>(key, value));
+        try {
+            if (data.size() >= capacity){
+                evict();
+            }
+
+            data.put(key, new Item<>(key, value));
+        } finally {
+            lock.writeLock().unlock();
+        }
     }
 
     @Override
     public Optional<V> get(K key) {
-        if (data.containsKey(key)){
-            Item<K, V> item = data.get(key);
-            item.sumCounter();
+        lock.readLock().lock();
+        try {
+            if (data.containsKey(key)){
+                Item<K, V> item = data.get(key);
+                item.sumCounter();
 
-            return Optional.of(item.value);
+                return Optional.of(item.value);
+            }
+
+            return Optional.empty();
+        } finally {
+            lock.readLock().unlock();
         }
-        
-        return Optional.empty();
     }
 
     @Override
     public void display() {
         data.forEach((k, kvItem) -> System.out.printf("Key: %s | Value: %s | Counts: %s%n", k, kvItem.value, kvItem.count));
+    }
+
+    @Override
+    public int size() {
+        return data.size();
     }
 
     private void evict() {

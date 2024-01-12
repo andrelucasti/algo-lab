@@ -8,4 +8,6 @@ public interface Cache<K, T> {
    Optional<T> get(K key);
 
    void display();
+
+   int size();
 }
